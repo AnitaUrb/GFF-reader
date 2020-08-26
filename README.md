@@ -1,16 +1,16 @@
 # Gff-reader
 
-Intro:
+Introduction:
 
-On flybase servers ftp://ftp.flybase.net/genomes/Drosophila_melanogaster/
+On flybase servers [ftp://ftp.flybase.net/genomes/Drosophila_melanogaster/](ftp://ftp.flybase.net/genomes/Drosophila_melanogaster/)
 there is a list of fruit fly genome annotations. The directory structure is as follows:
-Version / filetype / pliki_opisujące_chromosomy
+*Version / filetype / files_describing_chromosomes*
 
-The task was to write a script in gffreader.sh in bash, which downloads and extracts files from a specific version, in a specific format and
+The task was to write a script called gffreader.sh in bash, which downloads and extracts files from a specific version, in a specific format and
 for a specific chromosome. 
 
 Eg.
-call: gffreader.sh -t gff -v dmel_r5.21_FB2009_08 -c 2L
+call:~$ *gffreader.sh -t gff -v dmel_r5.21_FB2009_08 -c 2L*
 
 should cause the file to be downloaded:
 
