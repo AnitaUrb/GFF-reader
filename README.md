@@ -19,7 +19,7 @@ ftp://ftp.flybase.net/genomes/Drosophila_melanogaster/dmel_r5.21_FB2009_08/gff/d
 
 To start:
 
-call:~$ *gffreader.sh -t format -v file -c chromosome -d -l -s*
+```call:~$ *gffreader.sh -t format -v file -c chromosome -d -l -s*```
 
  - -h print help (usage)
  - -t specify data format, eg. gff
