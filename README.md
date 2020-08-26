@@ -19,14 +19,14 @@ ftp://ftp.flybase.net/genomes/Drosophila_melanogaster/dmel_r5.21_FB2009_08/gff/d
 
 To start:
 
-```call:~$ *gffreader.sh -t format -v file -c chromosome -d -l -s*```
+call:~$ *gffreader.sh -t format -v file -c chromosome -d -l -s*
 
- - -h print help (usage)
- - -t specify data format, eg. gff
- - -v specify file, eg. dmel_r5.21_FB2009_08
- - -c specify chromosome, eg. 2L*
- - -d print  chromosome length (additional)
- - -l print total number of genes (additional)
- - -s print average gene length (additional)
+ - *-h* print help (usage)
+ - *-t* specify data format, eg. gff
+ - *-v* specify file, eg. dmel_r5.21_FB2009_08
+ - *-c* specify chromosome, eg. 2L*
+ - *-d* print  chromosome length (additional)
+ - *-l* print total number of genes (additional)
+ - *-s* print average gene length (additional)
  
 All mandatory options above must be specified, otherwise an appropriate message will be displayed.
