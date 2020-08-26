@@ -7,8 +7,8 @@ there is a list of fruit fly genome annotations. The directory structure is as f
 *Version / filetype / files_describing_chromosomes*
 
 The task was to write a script called gffreader.sh in bash, which downloads and extracts files from a specific version, in a specific format and
-for a specific chromosome. Options to implement: -h, -t, -c, -v. The script should write help (usage) after using the -h option or no parameters. 
-Additionalyy find out what information is stored in this file and implement in script 3 interesting statistics available through the new options, as .gff files describe important genome features.
+for a specific chromosome by retrieving  options from user (or after using the -h option or no parameters script should write help). 
+As .gff files describe important genome features, additionaly find out what information is stored in this file and implement in script 3 interesting statistics available through new options. 
 
 Eg.
 call:~$ *gffreader.sh -t gff -v dmel_r5.21_FB2009_08 -c 2L*
@@ -21,11 +21,12 @@ To start:
 
 call:~$ *gffreader.sh -t format -v file -c chromosome -d -l -s*
 
- -h help
- -t data format 
- -v file
- -c chromosome
- -d chromosome length (additional)
- -l total number of genes: (additional)
- -s average gene length: (additional)
+ -h print help (usage)
+ -t specify data format, eg. gff
+ -v specify file, eg. dmel_r5.21_FB2009_08
+ -c specify chromosome, eg. 2L*
+ -d print  chromosome length (additional)
+ -l print total number of genes (additional)
+ -s print average gene length (additional)
  
+All mandatory options above must be specified, otherwise an appropriate message will be displayed.
