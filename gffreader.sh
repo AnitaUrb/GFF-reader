@@ -1,115 +1,112 @@
+#!/bin/bash
+
 function Usage()
 {
 cat <<EOF
-Usage: $0 [-h] [-t] [-c] [-v] [-c prefix] files...
- -t format
- -c chromosom
- -v plik
- -h pomoc
+Usage: $0 [-h] [-t <format>] [-v <file>] [-c <chromosome>] [-d] [-l] [-s]:
+ -h help
+ -t data format 
+ -v file
+ -c chromosome
+ -d chromosome length
+ -l total number of genes
+ -s average gene length
 EOF
-#wget -O mucha.txt ftp://ftp.flybase.net/genomes/Drosophila_melanogaster/ 
-} 
- 
-# Jesli nie podano argumentow wypisz Usage
-# 
-if [ "$*" = "" ]
-then
-    Usage 
-    # Zwroc kod bledu
-    exit 20
-fi
+}
 
-$path = ftp://ftp.flybase.net/genomes/Drosophila_melanogaster/opcja_v/opcja_t/opcja_c
+while getopts ":h:t:v:c:dls" o; do
+    case "${o}" in 
+        h)
+            Usage
+            ;;
 
-# Przygotowanie do pobierania opcji 
-#
-# Inne alternatywne polecenie do pobierania opcji to getopts
-#
-set -- `getopt hwr:c:u $*`
- 
-echo $*
- 
-while [ "$1" != -- ]
-do
-    case $1 in
-        -h)   echo COS; HFLG=1;;
-        -t)   PREFIX=$2; shift;;
-    -v)   RPREFIX=$2; shift;; 
-    -c)   CPREFIX=$2; shift;; 
+        t)
+	    HTHT=1
+            t=${OPTARG}
+	    ;;
+        v)
+	    VTVT=1
+            v=${OPTARG}
+            ;;
+        c)
+	    CTCT=1
+            c=${OPTARG}
+            ;;
+
+	d)
+	    DTDT=1
+	    ;;
+	
+	l)
+	    LTLT=1
+	    ;;
+
+	s) 
+	    STST=1
+	    ;;
+       *)
+            Usage
+            ;;
+
     esac
-    shift   # nastepna opcja
 done
- 
-echo $*
-shift   # pomin  --
- 
-if [ "$HFLG" = 1 ] 
+
+shift $((OPTIND-1))
+
+if [ "$HTHT" = 1 ]
 then
-    Usage 
-    exit 0
+	echo "t = ${t}"
+else
+	echo "no -t argument, can't do"
+        exit 0
 fi
- 
-echo Pliki do przetworzenia: $*
- 
-# wypisz zawartosc plikow
- 
-if [ "$WFLG" = 1 ] 
+
+if [ "$VTVT" = 1 ]
 then
- 
-    # klazula <in $*> ponizej jest opcjonalna, patrz kolejne if-y
-    for i in $*
-    do  
-    echo "======" "======"  $i "======" "======"
-    cat $i
-    echo "======" "======" Koniec $i "======" "======"
-    done
+	echo "v = ${v}"
+else
+	echo "no -v argument, can't"
+        exit 1
 fi
- 
-# zmien nazwy 
- 
-if [ "$RPREFIX" ] 
+
+if [ "$CTCT" = 1 ]
 then
-  for i 
-  do
-      DEST=`dirname $i`/$RPREFIX`basename $i`
-      if mv $i $DEST 
-      then
-      echo Plik $i zmieniony na $DEST
-      else
-      echo Nie zmienilem nazwy $i
-      exit 14
-      fi
-  done
+	echo "c = ${c}"
+else
+	echo "no -c argument, can't"
+        exit 1
 fi
- 
-# kopiuj pliki ze zmiana nazwy 
- 
-if [ "$CPREFIX" ] 
+
+beginning=ftp://ftp.flybase.net/genomes/Drosophila_melanogaster/
+center=$beginning${v}/${t}/
+almost_end=$(echo ${v/_/-${c}-})
+end=$(echo ${almost_end%%_*})
+filename=$end.${t}
+link=$center$end.${t}.gz
+echo "Downloading:"
+wget -nc -o Messages.txt -O $filename.gz $link
+echo "ended.
+Download messages are in the "Messages.txt" file."     
+
+# keep both
+echo "Your data from $link
+is in $filename.gz and unpacked into $filename."
+gunzip -k $filename.gz
+
+if [ "$DTDT" = 1 ]
 then
-  for i 
-  do
-      DEST=`dirname $i`/$CPREFIX`basename $i`
-      if cp $i $DEST ; then
-      echo Plik $i skopiowany na $DEST
-      else
-      echo Nie skopiowalem $i
-      exit 15
-      fi
-  done
+        echo "Chromosome length "${c}":"
+        awk 'FNR==2' $filename | awk '{print $4-$3}'
 fi
- 
-# usun pliki
- 
-if [ "$UFLG" = 1 ] 
+
+if [ "$LTLT" = 1 ]
 then
-  for i 
-  do
-      if rm $i 
-      then
-      echo Plik $i usuniety
-      else
-      echo Nie usunalem $i
-      exit 16
-      fi
-  done
+        echo "Total number of genes:"
+        awk '{if ($3=="gene") x += 1;}END{print x}' $filename
+fi
+
+if [ "$STST" = 1 ]
+then
+        echo "Average gene length:"
+        cat $filename | grep -v "##" | awk '{if ($3 == "gene") {x += $5-$4; n += 1}}END{print x/n}'
 fi
