@@ -29,4 +29,4 @@ call:~$ *gffreader.sh -t format -v file -c chromosome -d -l -s*
  - *-l* print total number of genes (additional)
  - *-s* print average gene length (additional)
  
-All mandatory options above must be specified, otherwise an appropriate message will be displayed.
+Program run messages are displayed during execution and are written to *"Messages.txt"* after execution. All mandatory options above should be specified, otherwise an appropriate message will be displayed.
